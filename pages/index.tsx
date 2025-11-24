@@ -1,6 +1,5 @@
 import { useUser } from "@/hooks/useUser";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 
 export default function Dashboard() {
     const { user, loading } = useUser();
