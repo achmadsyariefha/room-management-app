@@ -1,22 +1,14 @@
-import { useUser } from "@/hooks/useUser";
-import { useRouter } from "next/router";
+import Header from "@/components/Header";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 export default function Dashboard() {
-    const { user, loading } = useUser();
-    const router = useRouter();
-
-    if (loading) {
-        return <p>Loading...</p>;
-    }
-
-    if (!user) {
-        router.push("/login");
-        return null;
-    }
     return (
-        <main>
-            <h1>Dashboard</h1>
-            <p>Hello, {user?.email}</p>
-        </main>
+        <ProtectedRoute>
+            <Header />
+            <main className="p-6">
+                <h2 className="text-2xl font-bold">Dashboard</h2>
+                {/* Dashboard content */}
+            </main>
+        </ProtectedRoute>
     );
 }

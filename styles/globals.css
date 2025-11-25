@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+/* Define your theme directly in CSS */
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --color-primary: #2563eb; /* blue-600 */
+  --color-secondary: #64748b; /* slate-500 */
+  --color-bg: #f1f5f9; /* slate-100 */
+  --breakpoint-lg: 1024px;
+}
+
+/* Apply the theme */
