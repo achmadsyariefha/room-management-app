@@ -1,11 +1,13 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
-import Header from "@/components/Header";
+import Layout from "@/components/Layout";
 
 export default function Bookings() {
     return (
         <ProtectedRoute>
-            <Header />
-            <h1>Bookings</h1>
+            <Layout>
+                <h2 className="text-2xl font-bold">Bookings</h2>
+                <p className="text-gray-700 mt-2">Manage your bookings here.</p>
+            </Layout>
         </ProtectedRoute>
     );
 }

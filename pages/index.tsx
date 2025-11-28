@@ -1,14 +1,14 @@
-import Header from "@/components/Header";
+import Layout from "@/components/Layout";
 import ProtectedRoute from "@/components/ProtectedRoute";
 
 export default function Dashboard() {
     return (
         <ProtectedRoute>
-            <Header />
-            <main className="p-6">
+            <Layout>
                 <h2 className="text-2xl font-bold">Dashboard</h2>
                 {/* Dashboard content */}
-            </main>
+                <p className="text-gray-700 mt-2">Here's where you'll see room availability and manage bookings.</p>
+            </Layout>
         </ProtectedRoute>
     );
 }
