@@ -4,5 +4,7 @@ export interface Bookings {
     user_id: number;
     booking_start: string;
     booking_end: string;
+    status: string;
     created_at: string;
+    booking_title: string;
 }

@@ -1,18 +1,18 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useState } from "react";
+import { useRouter } from "next/router";   
 
-export default function Sidebar() {
+interface SidebarProps {
+    open: boolean;
+    setOpen: (open: boolean) => void;
+}
+
+export default function Sidebar({ open, setOpen }: SidebarProps) {
     const router = useRouter();
-    const [open, setOpen] = useState(false);
     const isActive = (path: string) => {
         return router.pathname === path ? "font-bold text-white underline" : "text-white";
     };
     return (
         <>
-        <button onClick={() => setOpen(true)} className="md:hidden fixed top-4 left-4 z-50 rounded p-2 bg-gray-800 text-white px-3 py-2">
-            ☰
-        </button>
         {open && (
             <div
             className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
@@ -29,6 +29,7 @@ export default function Sidebar() {
                 <nav className="flex flex-col gap-4">
                     <Link href="/" className={`hover:underline ${isActive("/")}`} onClick={() => setOpen(false)}>Dashboard</Link>
                     <Link href="/bookings" className={`hover:underline ${isActive("/bookings")}`} onClick={() => setOpen(false)}>Bookings</Link>
+                    <Link href="/rooms" className={`hover:underline ${isActive("/rooms")}`} onClick={() => setOpen(false)}>Rooms</Link>
                 </nav>
                 <div className="flex-1" />
                 <p className="text-xs text-gray-400">© {new Date().getFullYear()} Room Management App. All rights reserved.</p>
