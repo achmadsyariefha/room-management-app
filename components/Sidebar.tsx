@@ -29,7 +29,7 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
                 <nav className="flex flex-col gap-4">
                     <Link href="/" className={`hover:underline ${isActive("/")}`} onClick={() => setOpen(false)}>Dashboard</Link>
                     <Link href="/bookings" className={`hover:underline ${isActive("/bookings")}`} onClick={() => setOpen(false)}>Bookings</Link>
-                    <Link href="/rooms" className={`hover:underline ${isActive("/rooms")}`} onClick={() => setOpen(false)}>Rooms</Link>
+                    <Link href="/offices" className={`hover:underline ${isActive("/offices")}`} onClick={() => setOpen(false)}>Offices</Link>
                 </nav>
                 <div className="flex-1" />
                 <p className="text-xs text-gray-400">© {new Date().getFullYear()} Room Management App. All rights reserved.</p>

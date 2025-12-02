@@ -29,37 +29,6 @@ export default function RoomsIndex() {
         };
         fetchRooms();
     }, []);
-    
-    const handleBooking = async (roomId: number) => {
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) {
-            alert('You must be logged in to book a room');
-            return;
-        }
-
-        const start = new Date();
-        const end = new Date(start.getTime() + 60 * 60 * 1000);
-
-        const { error } = await supabase
-            .from('bookings')
-            .insert({
-                room_id: roomId,
-                user_id: user.id,
-                booking_start: start.toISOString(),
-                booking_end: end.toISOString(),
-                status: 'pending',
-                created_at: new Date().toISOString(),
-                booking_title: 'Booking',
-            });
-
-        if (error) {
-            console.error(error);
-            alert('Failed to create booking');
-        } else {
-            alert('Booking created successfully');
-            router.push('/bookings');
-        }
-    };
 
     return (
         <ProtectedRoute>
@@ -82,12 +51,6 @@ export default function RoomsIndex() {
                                         <p className="text-gray-500 text-sm">Office: {room.office.name} - {room.office.location}</p>
                                     )}
                                 </div>
-                                <button
-                                    onClick={() => handleBooking(room.id)}
-                                    className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded transition"
-                                >
-                                    Book This Room
-                                </button>
                             </li>
                         ))}
                     </ul>

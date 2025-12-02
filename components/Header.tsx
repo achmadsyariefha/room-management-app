@@ -48,7 +48,7 @@ export default function Header({ setSidebarOpen, sidebarOpen }: HeaderProps) {
                 <nav className="hidden md:flex gap-6">
                     <Link href="/" className={`hover:underline ${isActive("/")}`}>Home</Link>
                     <Link href="/bookings" className={`hover:underline ${isActive("/bookings")}`}>Bookings</Link>
-                    <Link href="/rooms" className={`hover:underline ${isActive("/rooms")}`}>Rooms</Link>
+                    <Link href="/offices" className={`hover:underline ${isActive("/offices")}`}>Offices</Link>
                 </nav>
                 <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 font-semibold rounded hover:bg-red-600 transition-colors text-sm">Logout</button>
             </div>
