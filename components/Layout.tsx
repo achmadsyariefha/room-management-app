@@ -13,7 +13,7 @@ export default function Layout({ children }: LayoutProps) {
             <Header setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen}/>
             <div className="flex flex-1">
                 <Sidebar open={sidebarOpen} setOpen={setSidebarOpen}/>
-                <main className="flex-1 p-6 md:ml-64">{children}</main>
+                <main className="flex-1 p-6">{children}</main>
             </div>
         </div>
     );

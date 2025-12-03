@@ -15,7 +15,7 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
         <>
         {open && (
             <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+            className="fixed inset-0 bg-black/50 z-40 md:hidden"
             onClick={() => setOpen(false)}
             />
         )}
@@ -23,7 +23,7 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
             {/* Toggle Button */}
             <div className="p-6 flex flex-col h-full">
                 <button onClick={() => setOpen(false)} className="md:hidden mb-6 p-2 text-left text-sm font-semibold hover:bg-gray-700 rounded">
-                    ✖ Close
+                    ✖
                 </button>
                 <h2 className="text-2xl font-bold mb-8">Menu</h2>
                 <nav className="flex flex-col gap-4">

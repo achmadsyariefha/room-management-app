@@ -16,6 +16,7 @@ export default function RoomDetails() {
     const [bookings, setBookings] = useState<Bookings[]>([]);
     const [loading, setLoading] = useState(true);
     const [selectedBookingId, setSelectedBookingId] = useState<number | null>(null);
+    const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
     const handleBooking = async (roomId: number) => {
         const { data: { user } } = await supabase.auth.getUser();
@@ -44,7 +45,6 @@ export default function RoomDetails() {
             alert('Failed to create booking');
         } else {
             alert('Booking created successfully');
-            router.push('/bookings');
         }
     };
 
@@ -65,6 +65,7 @@ export default function RoomDetails() {
             alert('Booking deleted successfully');
             setBookings((prevBookings) => prevBookings.filter((booking) => booking.id !== selectedBookingId));
             setSelectedBookingId(null);
+            setShowConfirmDelete(false);
         }
     };
     
@@ -135,14 +136,39 @@ export default function RoomDetails() {
                                         <li key={booking.id} className="flex justify-between items-center border-b py-2">
                                             <div>
                                                 <p>Booking Title: {booking.booking_title}</p>
-                                                <p>Booking Start: {new Date(booking.booking_start).toLocaleDateString()}</p>
-                                                <p>Booking End: {new Date(booking.booking_end).toLocaleDateString()}({booking.status})</p>
+                                                <p>Booking Start: {
+                                                        new Date(booking.booking_start).toLocaleString("en-GB", {
+                                                        timeZone: "Asia/Singapore",   
+                                                        hour12: false,
+                                                        year: "numeric",
+                                                        month: "2-digit",
+                                                        day: "2-digit",
+                                                        hour: "2-digit",
+                                                        minute: "2-digit",
+                                                    })}
+                                                </p>
+                                                <p>Booking End: {
+                                                        new Date(booking.booking_end).toLocaleString("en-GB", {
+                                                        timeZone: "Asia/Singapore",   
+                                                        hour12: false,
+                                                        year: "numeric",
+                                                        month: "2-digit",
+                                                        day: "2-digit",
+                                                        hour: "2-digit",
+                                                        minute: "2-digit",
+                                                    })}
+                                                    {" "}({booking.status})
+                                                </p>
+                                                <p>Booked By: {booking.user_id}</p>
                                             </div>
                                             <button
-                                                onClick={() => setSelectedBookingId(booking.id)}
-                                                className="ml-4 bg-yellow-600 text-white px-3 py-1 rounded hover:bg-yellow-700 transition"
+                                                onClick={() => {
+                                                    setSelectedBookingId(booking.id);
+                                                    setShowConfirmDelete(true);
+                                                }}
+                                                className="ml-4 bg-red-600 text-white px-3 py-1 rounded hover:bg-yellow-700 transition"
                                             >
-                                                Select Booking
+                                                Delete Booking
                                             </button>
                                         </li>
                                     ))}
@@ -158,13 +184,32 @@ export default function RoomDetails() {
                             >
                                 Book This Room
                             </button>
-                            {selectedBookingId && (
-                                <button
-                                    onClick={handleDeleteBooking}
-                                    className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded transition"
-                                >
-                                    Delete Booking (ID: {selectedBookingId})
-                                </button>
+                            {showConfirmDelete && selectedBookingId && (
+                                <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/50 transition-opacity duration-300 ease-in-out">
+                                    <div className="bg-white p-6 rounded shadow-lg z-70">
+                                        <h3 className="text-lg font-bold mb-4">Delete Booking</h3>
+                                        <p>Are you sure you want to delete this booking? ID: {" "}
+                                            <span className="font-semibold">{selectedBookingId}</span>
+                                        </p>
+                                        <div className="flex gap-4 mt-6">
+                                            <button
+                                                onClick={() => {
+                                                    setShowConfirmDelete(false);
+                                                    setSelectedBookingId(null);
+                                                }}
+                                                className="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded transition"
+                                            >
+                                                Cancel
+                                            </button>
+                                            <button
+                                                onClick={handleDeleteBooking}
+                                                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition"
+                                            >
+                                                Delete Booking
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             )}                   
                         </div>                   
                     </div>                   
