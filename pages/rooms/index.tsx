@@ -5,12 +5,10 @@ import { supabase } from "@/lib/supabaseClient";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Layout from "@/components/Layout";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 export default function RoomsIndex() {
     const [rooms, setRooms] = useState<(Rooms & { office?: Offices })[]>([]);
     const [loading, setLoading] = useState(true);
-    const router = useRouter();
     
     useEffect(() => {
         const fetchRooms = async () => {
