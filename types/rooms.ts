@@ -4,6 +4,6 @@ export interface Rooms {
     capacity: number;
     office_id: number;
     status: string;
-    description: string;
+    description?: string;
     created_at: string;
 }

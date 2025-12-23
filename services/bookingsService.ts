@@ -12,15 +12,18 @@ export async function createBooking(payload: NewBooking): Promise<Bookings> {
     return data;
 }
 
-export async function getBookingsByRoomId(roomId: number): Promise<Bookings[]> {
+export async function getBookingsByRoomId(roomId: number, days = 7): Promise<Bookings[]> {
+    const start = new Date();
+    const end = new Date(start.getTime() + days * 24 * 60 * 60 * 1000);
     const { data, error } = await supabase
         .from('bookings')
         .select('*')
         .eq('room_id', roomId)
-        .order('booking_start', { ascending: true });
+        .gte('booking_start', start.toISOString())
+        .lte('booking_end', end.toISOString())
 
     if (error) throw error;
-    return data || [];
+    return data ?? [];
 }
 
 export async function getBookingsByUserId(userId: string): Promise<Bookings[]> {
@@ -46,7 +49,8 @@ export async function checkBookingOverlap(roomId: number, start: string, end: st
         .from('bookings')
         .select('*')
         .eq('room_id', roomId)
-        .or(`booking_start.lte.${end},booking_end.gte.${start}`);
+        .lt('booking_start', end)
+        .gt('booking_end', start);
     if (error) throw error;
-    return data && data.length > 0;
+    return data.length > 0;
 }
