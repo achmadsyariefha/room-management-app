@@ -24,8 +24,8 @@ export default function BookingForm({ roomId, user, onBookingCreated }: BookingF
             return;
         }
 
-        const start = toUTC8ISOString(date, startTime);
-        const end = toUTC8ISOString(date, endTime);
+        const start = `${date}T${startTime}:00`;
+        const end = `${date}T${endTime}:00`;
 
         if (start >= end) {
             alert('End time must be after start time');

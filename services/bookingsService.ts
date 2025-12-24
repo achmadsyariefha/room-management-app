@@ -12,15 +12,15 @@ export async function createBooking(payload: NewBooking): Promise<Bookings> {
     return data;
 }
 
-export async function getBookingsByRoomId(roomId: number, days = 7): Promise<Bookings[]> {
-    const start = new Date();
-    const end = new Date(start.getTime() + days * 24 * 60 * 60 * 1000);
+export async function getBookingsByRoomId(roomId: number): Promise<Bookings[]> {
     const { data, error } = await supabase
         .from('bookings')
-        .select('*')
+        .select('*, user:user_profiles(id, email)')
         .eq('room_id', roomId)
-        .gte('booking_start', start.toISOString())
-        .lte('booking_end', end.toISOString())
+        .order('booking_start', { ascending: true });
+
+    console.log("Supabase error:", error);
+    console.log("Supabase data:", data);
 
     if (error) throw error;
     return data ?? [];

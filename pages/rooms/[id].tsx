@@ -71,7 +71,7 @@ export default function RoomDetails() {
         }
     };
 
-    if (loading) return <p className="p-4">Loading user...</p>;
+    if (loading || !user ) return <p className="p-4">Loading user...</p>;
 
     const safeUser: AppUser = {
         id: user?.id || '',
@@ -112,7 +112,7 @@ export default function RoomDetails() {
                                     <li key={booking.id} className="flex justify-between items-center border-b py-2">
                                         <div>
                                             <p className="font-bold">{booking.booking_title}</p>
-                                            <p>Booked by : {booking.user_id}</p>
+                                            <p>Booked by : {booking.user?.email}</p>
                                             <p>
                                                 {format(new Date(booking.booking_start), "Pp")} - {" "}
                                                 {format(new Date(booking.booking_end), "Pp")}
