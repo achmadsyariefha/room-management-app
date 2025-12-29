@@ -7,10 +7,8 @@ export interface Bookings {
     status: string;
     created_at: string;
     booking_title: string;
-    user?: {
-        id: string;
-        email: string;
-    };
+
+    user_email: string | null;
 }
 
 export interface NewBooking {

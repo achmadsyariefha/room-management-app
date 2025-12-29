@@ -25,10 +25,10 @@ export default function RoomDetails() {
     const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
     useEffect(() => {
-        if (!roomId) return;
+        if (!router.isReady || isNaN(roomId)) return;
         fetchRoomAndOffice();
         fetchBookings();
-    }, [roomId]);
+    }, [router.isReady, roomId]);
 
     const fetchRoomAndOffice = async () => {
         try {
@@ -74,8 +74,8 @@ export default function RoomDetails() {
     if (loading || !user ) return <p className="p-4">Loading user...</p>;
 
     const safeUser: AppUser = {
-        id: user?.id || '',
-        email: user?.email || '',
+        id: user.id,
+        email: user.email!,
     };
     
     return (
@@ -106,13 +106,13 @@ export default function RoomDetails() {
                     )}
                     <div>
                         <h3 className="text-xl font-bold">Bookings</h3>
-                        {bookings.length > 0 ? (
+                        {bookings.length !== 0 ? (
                             <ul>
                                 {bookings.map((booking: Bookings) => (
                                     <li key={booking.id} className="flex justify-between items-center border-b py-2">
                                         <div>
                                             <p className="font-bold">{booking.booking_title}</p>
-                                            <p>Booked by : {booking.user?.email}</p>
+                                            <p>Booked by : {booking.user_email}</p>
                                             <p>
                                                 {format(new Date(booking.booking_start), "Pp")} - {" "}
                                                 {format(new Date(booking.booking_end), "Pp")}
@@ -133,7 +133,7 @@ export default function RoomDetails() {
                                 ))}
                             </ul>
                         ) : (
-                            <p>No bookings found</p>
+                            <p>No bookings yet.</p>
                         )}
                     </div>
                     {showConfirmDelete && (

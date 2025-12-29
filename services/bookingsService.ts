@@ -14,13 +14,13 @@ export async function createBooking(payload: NewBooking): Promise<Bookings> {
 
 export async function getBookingsByRoomId(roomId: number): Promise<Bookings[]> {
     const { data, error } = await supabase
-        .from('bookings')
-        .select('*, user:user_profiles(id, email)')
+        .from('bookings_with_user')
+        .select('*')
         .eq('room_id', roomId)
         .order('booking_start', { ascending: true });
 
     console.log("Supabase error:", error);
-    console.log("Supabase data:", data);
+    console.log("Supabase data:", JSON.stringify(data, null, 2));
 
     if (error) throw error;
     return data ?? [];
@@ -32,6 +32,7 @@ export async function getBookingsByUserId(userId: string): Promise<Bookings[]> {
         .select('*')
         .eq('user_id', userId)
         .order('booking_start', { ascending: true });
+
     if (error) throw error;
     return data || [];
 }
