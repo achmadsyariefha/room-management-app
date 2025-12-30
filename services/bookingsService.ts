@@ -12,6 +12,15 @@ export async function createBooking(payload: NewBooking): Promise<Bookings> {
     return data;
 }
 
+export async function getBookings(): Promise<Bookings[]> {
+    const { data, error } = await supabase
+        .from('bookings_with_user')
+        .select('*')
+        .order('booking_start', { ascending: true });
+    if (error) throw error;
+    return data ?? [];
+}
+
 export async function getBookingsByRoomId(roomId: number): Promise<Bookings[]> {
     const { data, error } = await supabase
         .from('bookings_with_user')

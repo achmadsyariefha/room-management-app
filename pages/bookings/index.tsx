@@ -1,5 +1,7 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Layout from "@/components/Layout";
+import BookingAccordion from "@/components/BookingAccordion";
+import { getBookings } from "@/services/bookingsService";
 
 export default function Bookings() {
     return (

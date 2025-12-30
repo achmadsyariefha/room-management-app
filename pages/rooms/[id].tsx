@@ -6,12 +6,12 @@ import { getRoomById } from "@/services/roomsService";
 import { getOfficeById } from "@/services/officesService";
 import { deleteBooking, getBookingsByRoomId } from "@/services/bookingsService";
 import BookingForm from "@/components/BookingForm";
-import { format } from "date-fns";
 import { Rooms } from "@/types/rooms";
 import { Offices } from "@/types/offices";
 import { Bookings } from "@/types/bookings";
 import { AppUser } from "@/types/user";
 import Layout from "@/components/Layout";
+import BookingAccordion from "@/components/BookingAccordion";
 
 export default function RoomDetails() {
     const { user, loading } = useUser();
@@ -106,35 +106,7 @@ export default function RoomDetails() {
                     )}
                     <div>
                         <h3 className="text-xl font-bold">Bookings</h3>
-                        {bookings.length !== 0 ? (
-                            <ul>
-                                {bookings.map((booking: Bookings) => (
-                                    <li key={booking.id} className="flex justify-between items-center border-b py-2">
-                                        <div>
-                                            <p className="font-bold">{booking.booking_title}</p>
-                                            <p>Booked by : {booking.user_email}</p>
-                                            <p>
-                                                {format(new Date(booking.booking_start), "Pp")} - {" "}
-                                                {format(new Date(booking.booking_end), "Pp")}
-                                            </p>
-                                        </div>
-                                        {booking.user_id === user?.id && (
-                                            <button
-                                                onClick={() => {
-                                                    setSelectedBookingId(booking.id);
-                                                    setShowConfirmDelete(true);
-                                                }}
-                                                className="bg-red-500 text-white px-3 py-1 rounded"
-                                            >
-                                                Delete Booking
-                                            </button>
-                                        )}
-                                    </li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <p>No bookings yet.</p>
-                        )}
+                        <BookingAccordion bookings={bookings} />
                     </div>
                     {showConfirmDelete && (
                         <div className="bg-white p-6 rounded shadow-lg z-70">

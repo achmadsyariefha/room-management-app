@@ -44,7 +44,7 @@ export default function BookingForm({ roomId, user, onBookingCreated }: BookingF
                 user_id: user.id,
                 booking_start: start,
                 booking_end: end,
-                status: 'pending',
+                status: 'success',
                 created_at: new Date().toISOString(),
                 booking_title: title,
             });
